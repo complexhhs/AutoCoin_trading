@@ -64,8 +64,9 @@ def main_bollinger():
         Bollinger_check(ticker)
         time.sleep(0.1)
 
-Periodic_Bollinger_Timer()
 Periodic_balance_show()
+Periodic_Bollinger_Timer()
+
 
 #while True:
 #    for ticker in tickers[:50]:
