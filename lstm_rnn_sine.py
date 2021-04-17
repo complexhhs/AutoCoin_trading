@@ -5,6 +5,7 @@ Refer https://github.com/osm3000/Sequence-Generation-Pytorch/blob/master/models.
 Version 2.
 Refer https://github.com/pytorch/examples/tree/master/time_sequence_prediction
 '''
+#%%
 import torch
 import torch.nn as nn
 import torch.optim as optim
@@ -159,14 +160,18 @@ def sine_train_ver2():
     for e in range(15):
         print(f'Epoch: {e+1}')
         # Training
-        optimizer.zero_grad()
-        out = seq(input)
-        loss = criterion(out,target)
-        print(f'loss: {loss.item()}')
-        loss.backward()
-        optimizer.step()
+        seq.train()
+        def closure():
+            out = seq(input)
+            loss = criterion(out,target)
+            print(f'loss: {loss.item()}')
+            optimizer.zero_grad()
+            loss.backward()
+            return loss
+        optimizer.step(closure)
 
         # begin predict, no need to track gradient here
+        seq.eval()
         with torch.no_grad():
             future = 1000
             pred = seq(test_input,future=future)
