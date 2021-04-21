@@ -48,7 +48,7 @@ class Sequence(nn.Module):
 criterion = nn.MSELoss()
 
 # parameters
-epochs = 5
+epochs = 3
 
 norm_file = open(os.path.join("./coin_nn_model", "coin_norm2.txt"), "w")
 norm_file.write("coin_name    max_value    min_value")
@@ -106,5 +106,5 @@ for e in range(epochs):
         pred = seq(test_input, future=future)
         loss = criterion(pred[:, :-future], test_target)
         print(f"Test loss: {loss.item()}")
-torch.save(seq, model_name)
+    torch.save(seq, model_name)
 print("")
